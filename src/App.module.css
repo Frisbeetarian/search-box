@@ -5,8 +5,27 @@
     border: 1px solid #ddd;
 }
 
-.text {
+.article {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+.title {
     color: #333;
     font-size: 24px;
-    text-align: center;
+    margin-bottom: 5px;
+}
+
+.date {
+    color: #777;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.content {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 60%;
 }
