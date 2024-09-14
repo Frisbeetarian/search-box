@@ -34,3 +34,11 @@
     background-color: yellow;
     font-weight: bold;
 }
+
+.articlesCount {
+    font-size: 18px;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
