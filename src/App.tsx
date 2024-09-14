@@ -1,8 +1,10 @@
 import styles from "@/App.module.css"; // Import the CSS module
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import React, { useState } from "react";
+import { ArticleList } from "@/components/article-list.tsx";
+import { ArticleType } from "@/lib/types.ts";
 
-const articles = [
+const articles: ArticleType[] = [
   {
     id: 1,
     title: "Understanding React Hooks",
@@ -71,36 +73,8 @@ const articles = [
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const handleSearchInputChange = (event: any) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const filteredArticles = articles.filter((article) => {
-    return (
-      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      article.content.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  });
-
-  const truncate = (text: string, maxLength: number) => {
-    return text.length > maxLength
-      ? text.substring(0, maxLength) + "..."
-      : text;
-  };
-
-  const highlightText = (text: string, searchTerm: string) => {
-    if (!searchTerm) return text;
-
-    const regex = new RegExp(`(${searchTerm})`, "gi");
-    return text.split(regex).map((part, index) =>
-      part.toLowerCase() === searchTerm.toLowerCase() ? (
-        <span key={index} className={styles.highlight}>
-          {part}
-        </span>
-      ) : (
-        part
-      ),
-    );
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
   };
 
   return (
@@ -110,23 +84,12 @@ function App() {
         <Input
           type="text"
           placeholder="Search..."
-          className="py-5 text-lg"
           value={searchQuery}
-          onChange={handleSearchInputChange}
+          onChange={handleInputChange}
+          className="py-5 text-lg"
         />
-        {searchQuery !== "" && <p>{filteredArticles.length} articles found</p>}
       </div>
-      {articles.map((article) => (
-        <div key={article.id} className={styles.article}>
-          <h2 className={styles.title}>
-            {highlightText(article.title, searchQuery)}
-          </h2>
-          <p className={styles.date}>{article.date}</p>
-          <p className={styles.content}>
-            {highlightText(truncate(article.content, 500), searchQuery)}
-          </p>
-        </div>
-      ))}
+      <ArticleList articles={articles} searchQuery={searchQuery} />
     </div>
   );
 }
